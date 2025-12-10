@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REACH Consortium - Research</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#111827', 
+                        accent: '#0ea5e9',  
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-light text-gray-700 font-sans antialiased">
+
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                    <img class="h-10 w-auto group-hover:scale-105 transition-transform" src="./images/logo.png" alt="REACH Logo">
+                    <span class="font-bold text-xl tracking-tight text-primary">REACH</span>
+                </a>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-500 hover:text-primary font-medium transition-colors px-1 pt-1">Who We Are</a>
+                    <a href="resources.html" class="text-gray-500 hover:text-primary font-medium transition-colors px-1 pt-1">Resources</a>
+                    <a href="events.html" class="text-gray-500 hover:text-primary font-medium transition-colors px-1 pt-1">Events</a>
+                    <a href="research.html" class="text-accent font-bold border-b-2 border-accent px-1 pt-1">Research</a>
+                </div>
+
+                <div class="flex items-center md:hidden">
+                    <button type="button" onclick="toggleMobileMenu()" class="text-gray-500 hover:text-primary focus:outline-none p-2">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100">
+            <div class="px-4 pt-2 pb-4 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-base font-medium text-gray-500 hover:text-accent hover:bg-gray-50 rounded-md">Who We Are</a>
+                <a href="resources.html" class="block px-3 py-2 text-base font-medium text-gray-500 hover:text-accent hover:bg-gray-50 rounded-md">Resources</a>
+                <a href="events.html" class="block px-3 py-2 text-base font-medium text-gray-500 hover:text-accent hover:bg-gray-50 rounded-md">Events</a>
+                <a href="research.html" class="block px-3 py-2 text-base font-medium text-accent bg-blue-50 rounded-md">Research</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-white pt-16 pb-12 px-4 shadow-sm">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-primary mb-4 tracking-tight">
+                Research Highlights
+            </h1>
+            <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+                Explore our latest talks, technical presentations, and publications across key thematic areas.
+            </p>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-12">
+            
+            <aside class="w-full lg:w-64 flex-shrink-0">
+                <div class="sticky top-24 space-y-8">
+                    
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Search topics..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-sm">
+                        <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Filter by Theme</h3>
+                        <div class="space-y-1 flex flex-col" id="filterContainer">
+                            <button onclick="filterVideos('all')" class="filter-btn active text-left px-3 py-2 rounded-md text-sm font-medium transition-colors bg-blue-50 text-accent">All Research</button>
+                            <button onclick="filterVideos('hci')" class="filter-btn text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">HCI & Design</button>
+                            <button onclick="filterVideos('trust')" class="filter-btn text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">Trustworthy AI</button>
+                            <button onclick="filterVideos('xr')" class="filter-btn text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">Extended Reality (XR)</button>
+                            <button onclick="filterVideos('mobility')" class="filter-btn text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">Intelligent Mobility</button>
+                            <button onclick="filterVideos('science')" class="filter-btn text-left px-3 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-primary transition-colors">AI for Science</button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <div class="flex-grow">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="videoGrid">
+
+                    <div class="video-card group" data-category="mobility">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/ZzXZVnONBfo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">Intelligent Mobility</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Predicting Driver Takeover Performance in Level 3 AVs</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Min Deng discusses physiological sensing and safety in autonomous vehicle transitions.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="trust">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/3b6YQmjaF_8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">Trustworthy AI</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">The Science of Detecting LLM-Generated Texts</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Ruixiang Tang explores vulnerabilities and detection methods for Large Language Models.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="xr">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/oJa50SrW9zw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">Extended Reality (XR)</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Lumilo 2: Mixed Reality for Teacher Analytics</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Qiao Jin demonstrates a scalable MR system for real-time classroom intervention.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="science">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/bxxB2RY8mWo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">AI for Science</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Adaptive Process-Guided Learning</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Runlong Yu applies machine learning to predict lake dissolved oxygen concentrations.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="hci">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/HYGUCwoOHCk?start=3968" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">HCI & Design</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Creativity Support in HCI</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Zhicong Lu discusses how tools can support cultural production and creativity.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="hci">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/4OiiqxjWf_c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">HCI & Design</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">FamiData Hub: Smart Home Datafication</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Ge Wang explores speculative design with families regarding their data privacy.</p>
+                        </div>
+                    </div>
+
+                    <div class="video-card group" data-category="xr">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/WxWUJBpD7ps" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">Extended Reality (XR)</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Chameleon: Adaptive Obstacles in VR</h3>
+                            <p class="text-sm text-gray-500 mt-2">Unobtrusive substitution of real-world obstacles in VR with risk-level awareness.</p>
+                        </div>
+                    </div>
+
+                     <div class="video-card group" data-category="hci">
+                        <div class="aspect-video bg-gray-100 rounded-xl overflow-hidden shadow-sm border border-gray-200 relative">
+                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/RJeB3g25FTY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <span class="text-xs font-bold text-accent uppercase tracking-wide">HCI & Design</span>
+                            <h3 class="text-lg font-bold text-primary mt-1 leading-tight group-hover:text-accent transition-colors">Data Physicalization with WavData Lamp</h3>
+                            <p class="text-sm text-gray-500 mt-2">Dr. Ce Zhong investigates composite relations with data-physicalized things.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-20 pt-10 border-t border-gray-200">
+                    <h2 class="text-2xl font-bold text-primary mb-8">Selected Publications</h2>
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                        <p class="text-sm text-gray-500 mb-6">Access our full publication lists via Google Scholar:</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <a href="https://scholar.google.com/citations?user=PLdGD5IAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">MD</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Min Deng</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=9HeqQGsAAAAJ&hl" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">QJ</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Qiao Jin</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?hl=en&user=AhS0SckAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">LL</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Lingyao Li</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=xCxyGuwAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">ZL</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Zhicong Lu</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=J-lruG8AAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">RM</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Renkai Ma</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=xZk3FfsAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">RT</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Ruixiang Tang</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=DVV3PDIAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">GW</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Ge “Tiffany” Wang</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=Gh-PXb4AAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">FY</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Fan Yang</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=AoZhHP4AAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">RY</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Runlong Yu</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                            <a href="https://scholar.google.com/citations?user=JwHuu6UAAAAJ" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors group">
+                                <span class="h-8 w-8 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xs font-bold group-hover:bg-accent group-hover:text-white transition-colors">CZ</span>
+                                <span class="font-medium text-gray-700 group-hover:text-primary">Ce Zhong</span>
+                                <span class="ml-auto text-gray-400 text-sm">↗</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-primary text-white py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center mb-6">
+                <div class="bg-white p-3 rounded-xl inline-block">
+                    <img class="h-10 w-auto" src="./images/logo.png" alt="REACH Logo">
+                </div>
+            </div>
+            <p class="text-gray-400 font-medium tracking-wide text-sm mb-4 uppercase">
+                REsponsible AI and Computing for Humanity
+            </p>
+            <p class="text-gray-600 text-xs">&copy; 2025 REACH Consortium. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Filtering Logic
+        function filterVideos(category) {
+            const cards = document.querySelectorAll('.video-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update buttons state
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-50', 'text-accent');
+                btn.classList.add('text-gray-600');
+                if(btn.textContent.toLowerCase().includes(category) || (category === 'all' && btn.textContent.includes('All'))) {
+                    btn.classList.remove('text-gray-600');
+                    btn.classList.add('bg-blue-50', 'text-accent');
+                }
+            });
+
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Search Logic
+        document.getElementById('searchInput').addEventListener('keyup', function(e) {
+            const term = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.video-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const desc = card.querySelector('p').textContent.toLowerCase();
+                
+                if(title.includes(term) || desc.includes(term)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
